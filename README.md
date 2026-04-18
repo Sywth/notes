@@ -1,6 +1,6 @@
 # Sywth's Notes
 
-Personal notes, rendered with LaTeX.
+Notes, mainly math and logic, rendered with LaTeX.
 
 ## Setup (Debian Only)
 
