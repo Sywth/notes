@@ -1,0 +1,67 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+
+\question{Given some CNF \(\Phi\) how can we determine if it is satisfiable?}
+
+Firstly lets make some definitions.
+\newcommand{\union}{\; \vert \;}
+\newcommand{\return}{\; \hookrightarrow \;}
+
+\begin{align*}
+	p & = 1 \union 2 \union 3 \union \ldots &  & \text{i.e. $p \in \N$ is some atom} \\
+	L & = \neg p \union p                                                            \\
+	C & = C \lor C \union L                                                          \\
+	F & = F \land F \union C
+\end{align*}
+
+
+% Note what I am trying to get at with 
+%   \set{\text{Err}} \cup \text{Set<L>}
+%   is that its the union between the singleton {Err} and the set of all sets of literals 
+\begin{algorithm}
+	\caption{DPLL}
+	\begin{lstlisting}[style=pseudo]
+  fn dpll($\Phi$: F, $\Gamma$: Set<L>) $\to \set{\top, \bot}$ {
+    if $ \neg ( \Gamma \coloneqq \text{unit\_propagate} ( \Phi, \Gamma ) ) $ {
+      $\return \bot$ 
+    }
+
+    if $\Gamma \vDash \Phi$ {
+      $\return \top$ 
+    }
+
+    $l \gets \text{pick}(\text{literals}(\Phi) \setminus (\Gamma \cup \neg \Gamma))$
+    if dpll($\Phi, \Gamma \cup \set{l}$) {
+      $\return \top$
+    }
+    $\return \text{dpll}(\Phi, \Gamma \cup \set{\neg l})$
+  }
+\end{lstlisting}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Unit Propagate}
+	\begin{lstlisting}[style=pseudo]
+  fn unit_propagate($ \Phi$: F, $\Gamma$: Set<L>) $\to \set{\text{Err}} \cup \text{Set<L>}$ {
+    $\forall c \in \Phi$ {
+      if $\exists l \in \text{literals}(c) ( l \in \Gamma )$ {
+        continue
+      }
+
+      $\text{unassigned} \gets \set{ l : l \in \text{literals}(c) \land \neg l \not \in \Gamma}$  
+      if unassigned = $\emptyset$ {
+        $\return \text{Err}$
+      }
+      if unassigned = $\set{ l }$ {
+        $\return \text{unit\_propagate} (\Phi, \Gamma \cup \set{ l })$ 
+      }
+    }
+    $\return \Gamma$
+  }
+\end{lstlisting}
+\end{algorithm}
+
+\textbf{Follow-up questions:}
+\followup{How can I optimize this?}
+
+\end{document}
