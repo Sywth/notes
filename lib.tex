@@ -6,17 +6,24 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{enumitem}
+\usepackage{float}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 \usepackage{listings}
 
+% disable floating — place all floats exactly where they appear in source
+\floatplacement{figure}{H}
+\floatplacement{table}{H}
+\floatplacement{algorithm}{H}
+
 \lstdefinestyle{pseudo}{
-  basicstyle  = \ttfamily\small,
-  mathescape  = true,
-  columns     = flexible,
-  keepspaces  = true,
-  escapeinside= {(*}{*)},
-  xleftmargin = 1.5em,
+	basicstyle  = \ttfamily\small,
+	mathescape  = true,
+	columns     = flexible,
+	keepspaces  = true,
+	escapeinside= {(*}{*)},
+	numbers     = left,
+	xleftmargin = 1.5em,
 }
 
 % ── Theorem environments ──────────────────────────────────────────────────────
@@ -38,23 +45,23 @@
 
 % \question{...}  – blue box for a question or concept to explore
 \newcommand{\question}[1]{%
-  \begin{tcolorbox}[
-    colback  = blue!6!white,
-    colframe = blue!45!black,
-    boxrule  = 0.6pt,
-    left = 6pt, right = 6pt,
-    top  = 4pt, bottom = 4pt
-  ]#1\end{tcolorbox}}
+	\begin{tcolorbox}[
+			colback  = blue!6!white,
+			colframe = blue!45!black,
+			boxrule  = 0.6pt,
+			left = 6pt, right = 6pt,
+			top  = 4pt, bottom = 4pt
+		]#1\end{tcolorbox}}
 
 % \writing{...}  – plain indented block for working through an answer
 \newcommand{\writing}[1]{%
-  \begin{quote}\small #1\end{quote}}
+	\begin{quote}\small #1\end{quote}}
 
 % \followup{...}  – bullet list of follow-up questions to revisit
 \newcommand{\followup}[1]{%
-  \begin{itemize}[noitemsep, topsep=2pt]
-    \item #1
-  \end{itemize}}
+	\begin{itemize}[noitemsep, topsep=2pt]
+		\item #1
+	\end{itemize}}
 
 % ── Common math shorthands ────────────────────────────────────────────────────
 \newcommand{\R}{\mathbb{R}}
@@ -72,3 +79,8 @@
 \DeclareMathOperator{\kernel}{ker}
 \DeclareMathOperator{\tr}{tr}
 \DeclareMathOperator{\diag}{diag}
+
+% --- Algo Stuff 
+\newcommand{\union}{\; \vert \;}
+\newcommand{\return}{\; \hookrightarrow \;}
+

@@ -4,9 +4,6 @@
 \question{Given some CNF \(\Phi\) how can we determine if it is satisfiable?}
 
 Firstly lets make some definitions.
-\newcommand{\union}{\; \vert \;}
-\newcommand{\return}{\; \hookrightarrow \;}
-
 \begin{align*}
 	p & = 1 \union 2 \union 3 \union \ldots &  & \text{i.e. $p \in \N$ is some atom} \\
 	L & = \neg p \union p                                                            \\
@@ -22,7 +19,7 @@ Firstly lets make some definitions.
 	\caption{DPLL}
 	\begin{lstlisting}[style=pseudo]
   fn dpll($\Phi$: F, $\Gamma$: Set<L>) $\to \set{\top, \bot}$ {
-    if $ \neg ( \Gamma \coloneqq \text{unit\_propagate} ( \Phi, \Gamma ) ) $ {
+    if $( \Gamma \coloneqq \text{unit\_propagate} ( \Phi, \Gamma ) )$ is Err {
       $\return \bot$ 
     }
 

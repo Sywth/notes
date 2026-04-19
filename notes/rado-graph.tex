@@ -1,8 +1,46 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
 
-\question{Given some graph $G \coloneqq (V,E)$ where $V \subseteq \N$ and $E \subseteq V^2$ prove that for any infinite subset (where $\lvert V' \rvert = \aleph_0$ and $E' \subseteq {V'}^2$) $G' \coloneqq (V', E')$ contains $G$.}
+\question{
+	Given some graph $G \coloneqq (V,E)$ where $V \subseteq \N$ and $E \subseteq V^2$ where $\lvert V \rvert = \aleph_0$ and $E$ is constructed by randomly connecting points in $V$ forever (e.g. coin flips) does $G$ contains itself? }
 
-Now first we need be far more strict here cause in all honesty I framed that question very poorly.
+Now first we need be far more strict here because in all honesty I framed that question very poorly. Lets start by defining what we mean by "randomly connecting" and "contains itself".
+
+"Contains itself" is easier so lets start there. Firstly lets define the $\subseteq$ operator on graphs. That is we define $\subseteq$ on the set $\text{GraphType} = \set{(V,E) : V \subseteq D \land E \subseteq D^2}$ for some domain $D$.
+
+\begin{align*}
+	G                    & = (V,E)                                           \\
+	G'                   & = (V' ,E')                                        \\
+	G' \subseteq G  \iff &                                                   \\
+	                     & \exists f : V \to V'  (                           \\
+	                     & \quad f \text{ is a bijection } \land             \\
+	                     & \quad \forall v \in V       (f(v) \in V') \land   \\
+	                     & \quad \forall (u,v) \in E   ((f(u), f(v)) \in E') \\
+	                     & )
+\end{align*}
+
+Now "randomly connecting". Assume we have some algorithm with a random number generator (RNG) (e.g. some probabilistic turing machine but I cannot be bothered to write up a full formal one so Ill assume one exists). We can devise an algorithm that creates $E$ from $V$.
+
+
+\begin{algorithm}
+	\caption{Edge Creation}
+	\begin{lstlisting}[style=pseudo]
+  // p is some constant we pick
+  $p \in (0,1)$ 
+  fn get_edges($V$ : Set<D>) $\to$ Set<D$^2$> {
+    edges $\gets \set{}$
+    $\forall (v_1, v_2) \in V^2$ {
+      // this is our magic RNG function that will return in range [0,1]
+      $r \gets \text{rng}()$ 
+      if $r > p$ {
+        edges.push((v1,v2))
+      }
+    }
+    $\return$ edges
+  }
+\end{lstlisting}
+\end{algorithm}
+
+Now we can define $E$ as the output of \texttt{get\_edges} on $V$. Now note when $\lvert V \rvert = \aleph_0$, we have it that \texttt{get\_edges} will not halt. To get past this think of it instead as a verifier. Given some vertices it will use a seeded rng function to determine if two points are connected. This way we do not need to wait till \texttt{get\_edges} finishes to meaningfully work with $E$.
 
 \end{document}
