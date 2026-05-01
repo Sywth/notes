@@ -1,0 +1,7 @@
+name = "Notes"
+version = "0.1.0"
+
+[[lean_lib]]
+name = "Notes"
+srcDir = "notes"
+globs = ["Dpll", "RadoGraph", "ProbabilityTree"]
