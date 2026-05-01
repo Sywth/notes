@@ -1,7 +1,8 @@
 OUT_DIR  := "build"
 RENDER_DIR := "notes-rendered"
 
-default: build
+default: 
+  @just --list
 
 build:
     latexmk -pdf -outdir={{OUT_DIR}} main.tex
